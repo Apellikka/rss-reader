@@ -1,12 +1,14 @@
 package com.example.rssreader
 
-import android.view.LayoutInflater
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 
-class RssItemRecyclerViewAdapter : ListAdapter<RssItem, RssItemViewHolder>(ItemsComparator()) {
+class RssItemRecyclerViewAdapter(private val context : Context) : ListAdapter<RssItem, RssItemViewHolder>(ItemsComparator()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RssItemViewHolder {
         return RssItemViewHolder.create(viewGroup)
@@ -15,6 +17,32 @@ class RssItemRecyclerViewAdapter : ListAdapter<RssItem, RssItemViewHolder>(Items
     override fun onBindViewHolder(holder: RssItemViewHolder, position: Int) {
         val current: RssItem = getItem(position)
         holder.bind(current)
+
+        holder.itemView.setOnClickListener {
+            toggleVisible(holder)
+        }
+
+        holder.linkTextView?.setOnClickListener {
+            openWebView(holder)
+        }
+    }
+
+    private fun openWebView(holder : RssItemViewHolder) {
+            val extra_url = holder.linkTextView?.text
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("url" ,extra_url)
+            context.startActivity(intent)
+    }
+
+    private fun toggleVisible(holder : RssItemViewHolder) {
+            if (holder.descriptionTextView?.visibility == View.VISIBLE) {
+                holder.descriptionTextView?.visibility = View.GONE
+                holder.linkTextView?.visibility = View.GONE
+            } else {
+                holder.descriptionTextView?.visibility = View.VISIBLE
+                holder.linkTextView?.visibility = View.VISIBLE
+        }
     }
 
     class ItemsComparator : DiffUtil.ItemCallback<RssItem>() {

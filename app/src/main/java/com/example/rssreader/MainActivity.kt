@@ -1,7 +1,5 @@
 package com.example.rssreader
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -24,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        rssItemAdapter = RssItemRecyclerViewAdapter()
+        rssItemAdapter = RssItemRecyclerViewAdapter(applicationContext)
         binding?.recyclerView?.adapter = rssItemAdapter
         binding?.recyclerView?.layoutManager = LinearLayoutManager(this)
         val divider = DividerItemDecoration(binding?.recyclerView?.context,

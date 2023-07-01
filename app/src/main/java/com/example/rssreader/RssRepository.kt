@@ -29,6 +29,7 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
 
     private fun getFeed() {
         viewModelScope.launch {
+            // Clear it on app exit, rather than on getting the feed?
             clearDatabase()
             try {
                 val channel = parser.getChannel(url2)

@@ -35,7 +35,7 @@ class RssItemViewHolder(view: View) : RecyclerView.ViewHolder(view)  {
     }
 
     private fun formatGuid(guid: String?) : String {
-        return "Original post: $guid"
+        return "Read more at: $guid"
     }
     private fun formatPubDate(pubDate: String?) : String {
         for (dateFormat in ValidDateFormats.validDateFormatsList()) {
