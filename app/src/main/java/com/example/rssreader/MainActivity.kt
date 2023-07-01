@@ -2,6 +2,8 @@ package com.example.rssreader
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,11 @@ class MainActivity : AppCompatActivity() {
         RssItemViewModel.RssViewModelFactory((application as RssItemsApplication).repository)
     }
 
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.actionbar, menu)
+        return true
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -25,8 +32,10 @@ class MainActivity : AppCompatActivity() {
         rssItemAdapter = RssItemRecyclerViewAdapter(applicationContext)
         binding?.recyclerView?.adapter = rssItemAdapter
         binding?.recyclerView?.layoutManager = LinearLayoutManager(this)
-        val divider = DividerItemDecoration(binding?.recyclerView?.context,
-            LinearLayoutManager.VERTICAL)
+        val divider = DividerItemDecoration(
+            binding?.recyclerView?.context,
+            LinearLayoutManager.VERTICAL
+        )
         binding?.recyclerView?.addItemDecoration(divider)
 
         rssItemViewModel.allItems.observe(this) { items ->
@@ -34,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /*fun openFeedActivity(item: MenuItem) {
 
+    }*/
 }
 

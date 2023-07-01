@@ -19,7 +19,7 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
         rssDao.insert(item)
     }
 
-    private suspend fun clearDatabase() {
+    suspend fun clearDatabase() {
         rssDao.deleteAll()
     }
 
@@ -29,10 +29,9 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
 
     private fun getFeed() {
         viewModelScope.launch {
-            // Clear it on app exit, rather than on getting the feed?
             clearDatabase()
             try {
-                val channel = parser.getChannel(url2)
+                val channel = parser.getChannel(url)
                 for (article in channel.articles) {
                     var item  =
                         RssItem(article.title.toString(), article.guid, article.description, article.pubDate)

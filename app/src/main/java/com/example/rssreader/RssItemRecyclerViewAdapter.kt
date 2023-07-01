@@ -22,27 +22,27 @@ class RssItemRecyclerViewAdapter(private val context : Context) : ListAdapter<Rs
             toggleVisible(holder)
         }
 
-        holder.linkTextView?.setOnClickListener {
-            openWebView(holder)
+        holder.readMore?.setOnClickListener {
+           openWebView(holder)
         }
     }
 
     private fun openWebView(holder : RssItemViewHolder) {
-            val extra_url = holder.linkTextView?.text
+            val extraUrl = holder.linkTextView?.text
             val intent = Intent(context, WebViewActivity::class.java)
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra("url" ,extra_url)
+            intent.putExtra("url" ,extraUrl)
             context.startActivity(intent)
     }
 
     private fun toggleVisible(holder : RssItemViewHolder) {
             if (holder.descriptionTextView?.visibility == View.VISIBLE) {
                 holder.descriptionTextView?.visibility = View.GONE
-                holder.linkTextView?.visibility = View.GONE
+                holder.readMore?.visibility = View.GONE
             } else {
                 holder.descriptionTextView?.visibility = View.VISIBLE
-                holder.linkTextView?.visibility = View.VISIBLE
-        }
+                holder.readMore?.visibility = View.VISIBLE
+            }
     }
 
     class ItemsComparator : DiffUtil.ItemCallback<RssItem>() {
