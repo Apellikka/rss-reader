@@ -1,9 +1,13 @@
 package com.example.rssreader
 
+import android.util.Log
 import androidx.annotation.NonNull
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Entity(tableName = "rssItem_table")

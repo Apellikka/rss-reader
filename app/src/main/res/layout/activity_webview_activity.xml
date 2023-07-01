@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/webview_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/webview"
+    <include
+        android:id="@+id/myToolbar"
+        layout="@layout/toolbar"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <WebView
         android:id="@+id/webview"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

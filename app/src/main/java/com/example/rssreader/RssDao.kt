@@ -14,7 +14,7 @@ interface RssDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item : RssItem)
-
+    
     @Query("DELETE FROM rssItem_table")
     suspend fun deleteAll()
 }
