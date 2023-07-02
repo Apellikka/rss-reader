@@ -44,7 +44,6 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
                 try {
                     val channel = parser.getChannel(urli)
                     for (article in channel.articles) {
-
                         val pubDate : LocalDateTime? = parseValidDate(article.pubDate)
                         val item =
                             RssItem(

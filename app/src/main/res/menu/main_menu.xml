@@ -5,6 +5,7 @@
         android:id="@+id/storage"
         android:icon="@drawable/baseline_storage_24"
         app:showAsAction="always"
+        android:onClick="openFeedActivity"
         android:title="Show feeds">
     </item>
 </menu>
