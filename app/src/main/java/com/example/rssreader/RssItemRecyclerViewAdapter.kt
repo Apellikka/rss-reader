@@ -14,6 +14,11 @@ class RssItemRecyclerViewAdapter(private val context : Context) : ListAdapter<Rs
         return RssItemViewHolder.create(viewGroup)
     }
 
+    override fun onViewRecycled(holder: RssItemViewHolder) {
+        super.onViewRecycled(holder)
+        collapseViewItem(holder)
+    }
+
     override fun onBindViewHolder(holder: RssItemViewHolder, position: Int) {
         val current: RssItem = getItem(position)
         holder.bind(current)
@@ -25,6 +30,11 @@ class RssItemRecyclerViewAdapter(private val context : Context) : ListAdapter<Rs
         holder.readMore?.setOnClickListener {
            openWebView(holder)
         }
+    }
+
+    private fun collapseViewItem(holder : RssItemViewHolder) {
+        holder.descriptionTextView?.visibility = View.GONE
+        holder.readMore?.visibility = View.GONE
     }
 
     private fun openWebView(holder : RssItemViewHolder) {
