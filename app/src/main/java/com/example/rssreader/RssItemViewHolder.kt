@@ -33,21 +33,8 @@ class RssItemViewHolder(view: View) : RecyclerView.ViewHolder(view)  {
         titleTextView?.text = item.title
         linkTextView?.text = item.guid
         descriptionTextView?.text = formatDescriptionText(item.description)
-        pubDateTextView?.text = formatPubDate(item.pubDate)
+        pubDateTextView?.text = item.dateFormatted
         readMore
-    }
-
-    private fun formatPubDate(pubDate: String?) : String {
-        for (dateFormat in ValidDateFormats.validDateFormatsList()) {
-            try {
-                val parsedDate = LocalDateTime.parse(pubDate, dateFormat)
-                return parsedDate.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"))
-            } catch (e: Exception) {
-                Log.d("RssItemViewHolder", "ParseException!")
-                continue
-            }
-        }
-        return pubDate.toString()
     }
 
     private fun formatDescriptionText(description: String?) : String {

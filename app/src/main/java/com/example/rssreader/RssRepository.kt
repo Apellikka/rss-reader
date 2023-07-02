@@ -1,11 +1,14 @@
 package com.example.rssreader
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rssreader.DateParser.Companion.parseValidDate
 import com.prof.rssparser.Parser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class RssRepository(val rssDao : RssDao) : ViewModel() {
@@ -41,12 +44,14 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
                 try {
                     val channel = parser.getChannel(urli)
                     for (article in channel.articles) {
+
+                        val pubDate : LocalDateTime? = parseValidDate(article.pubDate)
                         val item =
                             RssItem(
                                 article.title.toString(),
                                 article.guid,
                                 article.description,
-                                article.pubDate
+                                pubDate
                             )
                         insert(item)
                     }
