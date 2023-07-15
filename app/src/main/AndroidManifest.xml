@@ -25,7 +25,6 @@
         </activity>
         <activity android:name=".WebViewActivity"/>
         <activity android:name=".FeedViewActivity"/>
-
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package com.example.rssreader
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
 class RssItemViewModel(var rssRepository: RssRepository) : ViewModel()  {
 

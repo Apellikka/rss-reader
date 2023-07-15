@@ -4,23 +4,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rssreader.DateParser.Companion.parseValidDate
 import com.prof.rssparser.Parser
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 import kotlin.collections.ArrayList
 
-class RssRepository(val rssItemDao : RssItemDao) : ViewModel() {
+class RssRepository(val rssItemDao: RssItemDao, val rssUrlDao: RssUrlDao) : ViewModel() {
 
-    private val url = "https://www.schneier.com/feed/atom/"
-    private val url2 = "https://grahamcluley.com/feed"
-    private val url3 = "https://feeds.feedburner.com/TheHackersNews?format=xml"
-
-    private var list: ArrayList<String> = ArrayList()
-
+    private var list: List<String> = emptyList()
     private val parser = Parser.Builder().build()
 
-    val rssList : Flow<List<RssItem>> = rssItemDao.getAllItems()
-    suspend fun insert(item : RssItem) {
+    val rssList: Flow<List<RssItem>> = rssItemDao.getAllItems()
+
+    val allUrls: Flow<List<RssUrlItem>> = rssUrlDao.getAllUrls()
+
+    suspend fun insert(item: RssItem) {
         rssItemDao.insert(item)
     }
 
@@ -29,20 +32,21 @@ class RssRepository(val rssItemDao : RssItemDao) : ViewModel() {
     }
 
     init {
-        list.add(url)
-        list.add(url2)
-        list.add(url3)
+        GlobalScope.launch {
+            FeedUrlRepository(rssUrlDao).initialize()
+            allUrls.collect { list = it.map(RssUrlItem::url)}
+        }
         getFeed()
     }
 
     private fun getFeed() {
         viewModelScope.launch {
             clearDatabase()
-            for (urli in list) {
+            for (url in list) {
                 try {
-                    val channel = parser.getChannel(urli)
+                    val channel = parser.getChannel(url)
                     for (article in channel.articles) {
-                        val pubDate : LocalDateTime? = parseValidDate(article.pubDate)
+                        val pubDate: LocalDateTime? = parseValidDate(article.pubDate)
                         val item =
                             RssItem(
                                 article.title.toString(),
@@ -50,7 +54,6 @@ class RssRepository(val rssItemDao : RssItemDao) : ViewModel() {
                                 article.description,
                                 pubDate
                             )
-                        println(article.link)
                         insert(item)
                     }
                 } catch (e: Exception) {

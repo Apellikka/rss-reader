@@ -1,13 +1,19 @@
 package com.example.rssreader
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import okhttp3.internal.notify
+import okhttp3.internal.notifyAll
 
 class FeedViewModel(var rssUrlRepository: FeedUrlRepository) : ViewModel() {
 
     val allUrls: LiveData<List<RssUrlItem>> = rssUrlRepository.urlList.asLiveData()
+
+    fun insertUrl(url: RssUrlItem) {
+        viewModelScope.launch {
+            rssUrlRepository.insertUrl(url)
+        }
+    }
 
 
     class FeedViewModelFactory(private val rssUrlRepository: FeedUrlRepository) : ViewModelProvider.Factory {

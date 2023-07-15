@@ -8,7 +8,7 @@ class RssItemsApplication : Application()  {
 
     val applicationScope = CoroutineScope(SupervisorJob())
     val database by lazy {RssRoomDatabase.getDatabase(this, applicationScope)}
-    val repository by lazy {RssRepository(database.rssDao())}
+    val repository by lazy {RssRepository(database.rssDao(), database.rssUrlDao())}
     val urlRepository by lazy {FeedUrlRepository(database.rssUrlDao())}
 
 }

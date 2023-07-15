@@ -2,12 +2,17 @@ package com.example.rssreader
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rssreader.databinding.ActivityFeedViewBinding
+
 
 class FeedViewActivity : AppCompatActivity() {
 
@@ -17,20 +22,6 @@ class FeedViewActivity : AppCompatActivity() {
     private val feedViewModel: FeedViewModel by viewModels {
         FeedViewModel.FeedViewModelFactory((application as RssItemsApplication).urlRepository)
     }
-
-    // This activity gets a list of URLs from the viewModel.
-    // viewmodel gets the urls from a repo
-    // repo gets from the DB and different table than what I've used already
-
-    // New viewModel, new Repo, new DB-table.
-    // The new viewModel uses the new repo for getting the URLs from the database
-    // View is done as... RecyclerView? Clicking the item shows a pop up and asks if the user
-    // wants to delete it. Options: (Yes, No) / A button for deleting it on the item itself
-    // is probably more clear.
-
-    // A floating button etc. for adding a feed URL.
-    // Opens a fragment that has    URL: WRITE HERE and Add button on it.
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +41,16 @@ class FeedViewActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL
         )
         binding?.urlRecyclerView?.addItemDecoration(divider)
+        divider.setDrawable(ResourcesCompat.getDrawable(resources, android.R.color.white, theme)!!)
 
         feedViewModel.allUrls.observe(this) {urls ->
             urls.let { rssUrlItemAdapter!!.submitList(it) }
+
         }
+
+        val fab: View = findViewById(R.id.fab)
+        fab.setOnClickListener { NewUrlDialogFragment().show(supportFragmentManager, NewUrlDialogFragment.TAG) }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

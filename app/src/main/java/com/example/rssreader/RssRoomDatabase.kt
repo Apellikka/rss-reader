@@ -39,7 +39,7 @@ abstract class RssRoomDatabase : RoomDatabase()  {
 
     private class RssItemCallBack(private val scope: CoroutineScope) : Callback() {
 
-/*        override fun onCreate(db: SupportSQLiteDatabase) {
+      override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database -> scope.launch {
                 clearDatabase(database.rssDao())
@@ -48,6 +48,6 @@ abstract class RssRoomDatabase : RoomDatabase()  {
 
         suspend fun clearDatabase(rssItemDao: RssItemDao) {
             rssItemDao.deleteAll()
-        }*/
+        }
     }
 }

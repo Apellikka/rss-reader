@@ -20,9 +20,10 @@ class FeedUrlRepository(val rssUrlDao: RssUrlDao): ViewModel() {
     }
     suspend fun initialize() {
         insertUrl(url)
-        insertUrl(url2)
-        insertUrl(url3)
+        //insertUrl(url2)
+        //insertUrl(url3)
     }
+
 
     suspend fun insertUrl(url: RssUrlItem) {
         rssUrlDao.insertUrl(url)
