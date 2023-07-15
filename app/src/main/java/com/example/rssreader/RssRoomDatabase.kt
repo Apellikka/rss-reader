@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [RssItem::class, RssUrlItem::class], version=1, exportSchema = false)
+@Database(entities = [RssItem::class, RssUrlItem::class], version=2, exportSchema = false)
 @TypeConverters(DateConverters::class)
 abstract class RssRoomDatabase : RoomDatabase()  {
 
@@ -29,6 +29,7 @@ abstract class RssRoomDatabase : RoomDatabase()  {
                 RssRoomDatabase::class.java, "rss_database")
                     .addCallback(RssItemCallBack(scope))
                     .addTypeConverter(converters)
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

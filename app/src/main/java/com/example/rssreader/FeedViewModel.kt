@@ -12,7 +12,7 @@ class FeedViewModel(var rssUrlRepository: FeedUrlRepository) : ViewModel() {
 
     class FeedViewModelFactory(private val rssUrlRepository: FeedUrlRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(RssItemViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(FeedViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return FeedViewModel(rssUrlRepository) as T
             }

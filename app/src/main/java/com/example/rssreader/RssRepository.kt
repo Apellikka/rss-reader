@@ -17,8 +17,6 @@ class RssRepository(val rssItemDao : RssItemDao) : ViewModel() {
 
     private var list: ArrayList<String> = ArrayList()
 
-    private val feedViewModel: FeedViewModel? = null
-
     private val parser = Parser.Builder().build()
 
     val rssList : Flow<List<RssItem>> = rssItemDao.getAllItems()

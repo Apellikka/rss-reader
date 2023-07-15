@@ -5,12 +5,14 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rssreader.databinding.ActivityFeedViewBinding
 
 class FeedViewActivity : AppCompatActivity() {
 
     var binding : ActivityFeedViewBinding? = null
-    var urlList : ArrayList<String>? = null
+    var rssUrlItemAdapter: RssUrlItemRecyclerViewAdapter? = null
 
     private val feedViewModel: FeedViewModel by viewModels {
         FeedViewModel.FeedViewModelFactory((application as RssItemsApplication).urlRepository)
@@ -40,6 +42,18 @@ class FeedViewActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        rssUrlItemAdapter = RssUrlItemRecyclerViewAdapter()
+        binding?.urlRecyclerView?.adapter = rssUrlItemAdapter
+        binding?.urlRecyclerView?.layoutManager = LinearLayoutManager(this)
+        val divider = DividerItemDecoration(
+            binding?.urlRecyclerView?.context,
+            LinearLayoutManager.VERTICAL
+        )
+        binding?.urlRecyclerView?.addItemDecoration(divider)
+
+        feedViewModel.allUrls.observe(this) {urls ->
+            urls.let { rssUrlItemAdapter!!.submitList(it) }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
