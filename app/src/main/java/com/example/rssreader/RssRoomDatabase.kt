@@ -9,15 +9,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [RssItem::class], version=1, exportSchema = false)
+@Database(entities = [RssItem::class, RssUrlItem::class], version=1, exportSchema = false)
 @TypeConverters(DateConverters::class)
 abstract class RssRoomDatabase : RoomDatabase()  {
 
-    abstract fun rssDao() : RssDao
+    abstract fun rssDao(): RssItemDao
+    abstract fun rssUrlDao(): RssUrlDao
 
     companion object {
 
-        val converters = DateConverters()
+        private val converters = DateConverters()
 
         @Volatile
         private var INSTANCE : RssRoomDatabase? = null
@@ -37,17 +38,15 @@ abstract class RssRoomDatabase : RoomDatabase()  {
 
     private class RssItemCallBack(private val scope: CoroutineScope) : Callback() {
 
-        override fun onCreate(db: SupportSQLiteDatabase) {
+/*        override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database -> scope.launch {
                 clearDatabase(database.rssDao())
             } }
         }
 
-        suspend fun clearDatabase(rssDao: RssDao) {
-            rssDao.deleteAll()
-        }
+        suspend fun clearDatabase(rssItemDao: RssItemDao) {
+            rssItemDao.deleteAll()
+        }*/
     }
-
-
 }

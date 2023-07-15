@@ -7,7 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface RssDao {
+interface RssItemDao {
 
     @Query("SELECT * FROM rssItem_table ORDER BY pubDate DESC")
     fun getAllItems(): Flow<List<RssItem>>

@@ -1,6 +1,5 @@
 package com.example.rssreader
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rssreader.DateParser.Companion.parseValidDate
@@ -8,10 +7,9 @@ import com.prof.rssparser.Parser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-class RssRepository(val rssDao : RssDao) : ViewModel() {
+class RssRepository(val rssItemDao : RssItemDao) : ViewModel() {
 
     private val url = "https://www.schneier.com/feed/atom/"
     private val url2 = "https://grahamcluley.com/feed"
@@ -19,15 +17,17 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
 
     private var list: ArrayList<String> = ArrayList()
 
-    val parser = Parser.Builder().build()
+    private val feedViewModel: FeedViewModel? = null
 
-    val rssList : Flow<List<RssItem>> = rssDao.getAllItems()
+    private val parser = Parser.Builder().build()
+
+    val rssList : Flow<List<RssItem>> = rssItemDao.getAllItems()
     suspend fun insert(item : RssItem) {
-        rssDao.insert(item)
+        rssItemDao.insert(item)
     }
 
-    suspend fun clearDatabase() {
-        rssDao.deleteAll()
+    private suspend fun clearDatabase() {
+        rssItemDao.deleteAll()
     }
 
     init {
@@ -52,6 +52,7 @@ class RssRepository(val rssDao : RssDao) : ViewModel() {
                                 article.description,
                                 pubDate
                             )
+                        println(article.link)
                         insert(item)
                     }
                 } catch (e: Exception) {

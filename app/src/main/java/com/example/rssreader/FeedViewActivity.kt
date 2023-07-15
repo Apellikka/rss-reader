@@ -2,6 +2,7 @@ package com.example.rssreader
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rssreader.databinding.ActivityFeedViewBinding
@@ -11,7 +12,13 @@ class FeedViewActivity : AppCompatActivity() {
     var binding : ActivityFeedViewBinding? = null
     var urlList : ArrayList<String>? = null
 
+    private val feedViewModel: FeedViewModel by viewModels {
+        FeedViewModel.FeedViewModelFactory((application as RssItemsApplication).urlRepository)
+    }
+
     // This activity gets a list of URLs from the viewModel.
+    // viewmodel gets the urls from a repo
+    // repo gets from the DB and different table than what I've used already
 
     // New viewModel, new Repo, new DB-table.
     // The new viewModel uses the new repo for getting the URLs from the database
