@@ -51,6 +51,7 @@ class FeedViewActivity : AppCompatActivity() {
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener { NewUrlDialogFragment().show(supportFragmentManager, NewUrlDialogFragment.TAG) }
 
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

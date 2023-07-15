@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onResume() {
+        rssItemViewModel.getFeed()
+        super.onResume()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

@@ -39,7 +39,7 @@ class RssRepository(val rssItemDao: RssItemDao, val rssUrlDao: RssUrlDao) : View
         getFeed()
     }
 
-    private fun getFeed() {
+    fun getFeed() {
         viewModelScope.launch {
             clearDatabase()
             for (url in list) {
