@@ -34,6 +34,11 @@ class FeedViewActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         rssUrlItemAdapter = RssUrlItemRecyclerViewAdapter()
+        rssUrlItemAdapter?.apply {
+            onUrlClick = {
+                DeleteUrlDialogFragment(rssUrlItemAdapter?.getUrl()).show(supportFragmentManager, DeleteUrlDialogFragment.TAG)
+            }
+        }
         binding?.urlRecyclerView?.adapter = rssUrlItemAdapter
         binding?.urlRecyclerView?.layoutManager = LinearLayoutManager(this)
         val divider = DividerItemDecoration(

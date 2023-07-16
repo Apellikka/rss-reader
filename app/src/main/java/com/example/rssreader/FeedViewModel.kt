@@ -15,6 +15,12 @@ class FeedViewModel(var rssUrlRepository: FeedUrlRepository) : ViewModel() {
         }
     }
 
+    fun deleteUrl(url: RssUrlItem) {
+        viewModelScope.launch {
+            rssUrlRepository.deleteUrl(url)
+        }
+    }
+
 
     class FeedViewModelFactory(private val rssUrlRepository: FeedUrlRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

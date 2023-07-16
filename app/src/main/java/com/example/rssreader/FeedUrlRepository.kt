@@ -29,6 +29,10 @@ class FeedUrlRepository(val rssUrlDao: RssUrlDao): ViewModel() {
         rssUrlDao.insertUrl(url)
     }
 
+    suspend fun deleteUrl(url: RssUrlItem) {
+        rssUrlDao.deleteUrl(url)
+    }
+
 
 
 
