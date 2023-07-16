@@ -1,10 +1,12 @@
-package com.example.rssreader
+package com.example.rssreader.viewholders
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rssreader.R
+import com.example.rssreader.models.RssUrlItem
 
 class RssUrlViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

@@ -1,10 +1,12 @@
-package com.example.rssreader
+package com.example.rssreader.ui.fragment
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.example.rssreader.models.FeedViewModel
+import com.example.rssreader.models.RssUrlItem
 
 class DeleteUrlDialogFragment(var urlItem : RssUrlItem?) : DialogFragment() {
 

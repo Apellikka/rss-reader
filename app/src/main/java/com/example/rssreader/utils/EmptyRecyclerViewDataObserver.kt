@@ -1,4 +1,4 @@
-package com.example.rssreader
+package com.example.rssreader.utils
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

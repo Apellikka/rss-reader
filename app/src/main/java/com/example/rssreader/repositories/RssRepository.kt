@@ -1,18 +1,17 @@
-package com.example.rssreader
+package com.example.rssreader.repositories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rssreader.DateParser.Companion.parseValidDate
+import com.example.rssreader.models.RssItem
+import com.example.rssreader.database.RssItemDao
+import com.example.rssreader.database.RssUrlDao
+import com.example.rssreader.models.RssUrlItem
+import com.example.rssreader.utils.DateParser.Companion.parseValidDate
 import com.prof.rssparser.Parser
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
-import kotlin.collections.ArrayList
 
 class RssRepository(val rssItemDao: RssItemDao, val rssUrlDao: RssUrlDao) : ViewModel() {
 

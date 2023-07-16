@@ -1,4 +1,4 @@
-package com.example.rssreader
+package com.example.rssreader.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

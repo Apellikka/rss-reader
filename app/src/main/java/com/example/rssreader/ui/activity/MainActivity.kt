@@ -1,4 +1,4 @@
-package com.example.rssreader
+package com.example.rssreader.ui.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +9,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rssreader.*
+import com.example.rssreader.adapters.RssItemRecyclerViewAdapter
+import com.example.rssreader.database.RssItemsApplication
 import com.example.rssreader.databinding.ActivityMainBinding
+import com.example.rssreader.models.RssItemViewModel
+import com.example.rssreader.utils.EmptyRecyclerViewDataObserver
 
 
 class MainActivity : AppCompatActivity() {

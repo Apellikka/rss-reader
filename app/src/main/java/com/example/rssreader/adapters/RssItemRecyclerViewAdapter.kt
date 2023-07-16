@@ -1,4 +1,4 @@
-package com.example.rssreader
+package com.example.rssreader.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -7,8 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.example.rssreader.viewholders.RssItemViewHolder
+import com.example.rssreader.models.RssItem
+import com.example.rssreader.ui.activity.WebViewActivity
 
-class RssItemRecyclerViewAdapter(private val context : Context) : ListAdapter<RssItem, RssItemViewHolder>(ItemsComparator()) {
+class RssItemRecyclerViewAdapter(private val context : Context) : ListAdapter<RssItem, RssItemViewHolder>(
+    ItemsComparator()
+) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RssItemViewHolder {
         return RssItemViewHolder.create(viewGroup)

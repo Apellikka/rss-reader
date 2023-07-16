@@ -1,4 +1,4 @@
-package com.example.rssreader
+package com.example.rssreader.database
 
 import android.content.Context
 import androidx.room.Database
@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.rssreader.models.RssItem
+import com.example.rssreader.models.RssUrlItem
+import com.example.rssreader.utils.DateConverters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

@@ -1,10 +1,11 @@
-package com.example.rssreader
+package com.example.rssreader.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.rssreader.R
 import com.example.rssreader.databinding.ActivityWebviewActivityBinding
 
 class WebViewActivity : AppCompatActivity() {

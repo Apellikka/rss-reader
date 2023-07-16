@@ -1,9 +1,9 @@
-package com.example.rssreader
+package com.example.rssreader.repositories
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.rssreader.database.RssUrlDao
+import com.example.rssreader.models.RssUrlItem
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class FeedUrlRepository(val rssUrlDao: RssUrlDao): ViewModel() {
 

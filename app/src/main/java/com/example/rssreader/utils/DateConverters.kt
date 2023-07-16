@@ -1,8 +1,8 @@
-package com.example.rssreader
+package com.example.rssreader.utils
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.example.rssreader.DateParser.Companion.parseValidDate
+import com.example.rssreader.utils.DateParser.Companion.parseValidDate
 import java.time.LocalDateTime
 
 @ProvidedTypeConverter

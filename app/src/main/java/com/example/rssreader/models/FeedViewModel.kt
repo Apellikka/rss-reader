@@ -1,6 +1,7 @@
-package com.example.rssreader
+package com.example.rssreader.models
 
 import androidx.lifecycle.*
+import com.example.rssreader.repositories.FeedUrlRepository
 import kotlinx.coroutines.launch
 
 class FeedViewModel(var rssUrlRepository: FeedUrlRepository) : ViewModel() {

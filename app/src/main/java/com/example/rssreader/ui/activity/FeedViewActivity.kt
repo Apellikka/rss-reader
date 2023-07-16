@@ -1,4 +1,4 @@
-package com.example.rssreader
+package com.example.rssreader.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,7 +9,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rssreader.*
+import com.example.rssreader.adapters.RssUrlItemRecyclerViewAdapter
+import com.example.rssreader.database.RssItemsApplication
 import com.example.rssreader.databinding.ActivityFeedViewBinding
+import com.example.rssreader.models.FeedViewModel
+import com.example.rssreader.ui.fragment.DeleteUrlDialogFragment
+import com.example.rssreader.ui.fragment.NewUrlDialogFragment
+import com.example.rssreader.utils.EmptyRecyclerViewDataObserver
 
 
 class FeedViewActivity : AppCompatActivity() {
@@ -35,7 +42,8 @@ class FeedViewActivity : AppCompatActivity() {
         rssUrlItemAdapter?.apply {
             onUrlClick = {
                 DeleteUrlDialogFragment(rssUrlItemAdapter.getUrl()).show(supportFragmentManager,
-                    DeleteUrlDialogFragment.TAG)
+                    DeleteUrlDialogFragment.TAG
+                )
             }
         }
 
