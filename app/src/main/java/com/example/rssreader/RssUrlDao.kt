@@ -9,7 +9,7 @@ interface RssUrlDao {
     @Query("SELECT * FROM rssUrl_table")
     fun getAllUrls(): Flow<List<RssUrlItem>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUrl(url: RssUrlItem)
 
     @Delete

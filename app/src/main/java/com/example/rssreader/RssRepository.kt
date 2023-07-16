@@ -33,7 +33,6 @@ class RssRepository(val rssItemDao: RssItemDao, val rssUrlDao: RssUrlDao) : View
 
     init {
         GlobalScope.launch {
-            FeedUrlRepository(rssUrlDao).initialize()
             allUrls.collect { list = it.map(RssUrlItem::url)}
         }
         getFeed()

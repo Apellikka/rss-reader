@@ -3,9 +3,7 @@ package com.example.rssreader
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
@@ -17,7 +15,7 @@ import com.example.rssreader.databinding.ActivityFeedViewBinding
 class FeedViewActivity : AppCompatActivity() {
 
     var binding : ActivityFeedViewBinding? = null
-    var rssUrlItemAdapter: RssUrlItemRecyclerViewAdapter? = null
+    lateinit var rssUrlItemAdapter: RssUrlItemRecyclerViewAdapter
 
     private val feedViewModel: FeedViewModel by viewModels {
         FeedViewModel.FeedViewModelFactory((application as RssItemsApplication).urlRepository)
@@ -36,9 +34,11 @@ class FeedViewActivity : AppCompatActivity() {
         rssUrlItemAdapter = RssUrlItemRecyclerViewAdapter()
         rssUrlItemAdapter?.apply {
             onUrlClick = {
-                DeleteUrlDialogFragment(rssUrlItemAdapter?.getUrl()).show(supportFragmentManager, DeleteUrlDialogFragment.TAG)
+                DeleteUrlDialogFragment(rssUrlItemAdapter.getUrl()).show(supportFragmentManager,
+                    DeleteUrlDialogFragment.TAG)
             }
         }
+
         binding?.urlRecyclerView?.adapter = rssUrlItemAdapter
         binding?.urlRecyclerView?.layoutManager = LinearLayoutManager(this)
         val divider = DividerItemDecoration(
@@ -48,15 +48,24 @@ class FeedViewActivity : AppCompatActivity() {
         binding?.urlRecyclerView?.addItemDecoration(divider)
         divider.setDrawable(ResourcesCompat.getDrawable(resources, android.R.color.white, theme)!!)
 
-        feedViewModel.allUrls.observe(this) {urls ->
-            urls.let { rssUrlItemAdapter!!.submitList(it) }
-
-        }
-
         val fab: View = findViewById(R.id.fab)
-        fab.setOnClickListener { NewUrlDialogFragment().show(supportFragmentManager, NewUrlDialogFragment.TAG) }
+        fab.setOnClickListener {
+            NewUrlDialogFragment().show(supportFragmentManager, NewUrlDialogFragment.TAG)
+        }
+    }
 
+    override fun onResume() {
+        super.onResume()
 
+        feedViewModel.allUrls.observe(this) {urls ->
+            urls.let {
+                // Have to null it first so emptyRecyclerViewDataObserver gets the change. Not sure what
+                // happens under the hood.
+                rssUrlItemAdapter.submitList(null)
+                rssUrlItemAdapter.submitList(it) }
+            val emptyRecyclerViewDataObserver = EmptyRecyclerViewDataObserver(binding?.urlRecyclerView, binding?.emptyUrlView?.root)
+            rssUrlItemAdapter.registerAdapterDataObserver(emptyRecyclerViewDataObserver)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

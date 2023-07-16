@@ -2,8 +2,6 @@ package com.example.rssreader
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
 
 class FeedViewModel(var rssUrlRepository: FeedUrlRepository) : ViewModel() {
 

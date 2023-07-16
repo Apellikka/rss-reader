@@ -2,7 +2,6 @@ package com.example.rssreader
 
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels

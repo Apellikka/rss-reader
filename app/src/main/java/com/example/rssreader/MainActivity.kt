@@ -15,7 +15,7 @@ import com.example.rssreader.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     var binding: ActivityMainBinding? = null
-    var rssItemAdapter: RssItemRecyclerViewAdapter? = null
+    lateinit var rssItemAdapter: RssItemRecyclerViewAdapter
 
     private val rssItemViewModel: RssItemViewModel by viewModels {
         RssItemViewModel.RssViewModelFactory((application as RssItemsApplication).repository)
@@ -27,8 +27,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        rssItemViewModel.getFeed()
         super.onResume()
+        rssItemViewModel.getFeed()
+        rssItemViewModel.allItems.observe(this) { items ->
+            items?.let {
+                // Have to null it first so emptyRecyclerViewDataObserver gets the change. Not sure what
+                // happens under the hood.
+                rssItemAdapter.submitList(null)
+                rssItemAdapter.submitList(it) }
+            val emptyRecyclerViewDataObserver = EmptyRecyclerViewDataObserver(binding?.recyclerView, binding?.emptyFeedView?.root)
+            rssItemAdapter.registerAdapterDataObserver(emptyRecyclerViewDataObserver)
+            binding?.recyclerView?.scrollToPosition(0)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +58,6 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL
         )
         binding?.recyclerView?.addItemDecoration(divider)
-
-        rssItemViewModel.allItems.observe(this) { items ->
-            items?.let { rssItemAdapter!!.submitList(it) }
-            binding?.recyclerView?.scrollToPosition(0)
-        }
     }
 
     fun openFeedActivity(item: MenuItem) {

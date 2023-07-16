@@ -1,14 +1,11 @@
 package com.example.rssreader
 
-import android.app.Activity
-import android.content.Context
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 typealias OnUrlClick = (url: RssUrlItem) -> Unit
-class RssUrlItemRecyclerViewAdapter() : ListAdapter<RssUrlItem, RssUrlViewHolder>(UrlComparator()) {
+class RssUrlItemRecyclerViewAdapter : ListAdapter<RssUrlItem, RssUrlViewHolder>(UrlComparator()) {
 
     var onUrlClick: OnUrlClick? = null
     var urlItem: RssUrlItem? = null
